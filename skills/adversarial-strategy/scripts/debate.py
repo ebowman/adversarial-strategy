@@ -5,7 +5,7 @@ Sends strategies to multiple LLMs for critique using LiteLLM.
 
 Usage:
     echo "strategy" | python3 debate.py critique --models gpt-5.2
-    echo "strategy" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3
+    echo "strategy" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.5-flash,xai/grok-3
     echo "strategy" | python3 debate.py critique --models gpt-5.2 --focus assumptions
     echo "strategy" | python3 debate.py critique --models gpt-5.2 --persona rumelt
     echo "strategy" | python3 debate.py critique --models gpt-5.2 --context ./market-analysis.md
@@ -25,10 +25,10 @@ API Key Configuration:
 
 Supported providers:
     OpenAI:    OPENAI_API_KEY      models: gpt-5.2, gpt-4-turbo, o1, etc.
-    Anthropic: ANTHROPIC_API_KEY   models: claude-opus-4-5-20250514, claude-opus-4-5-20250514, etc.
-    Google:    GEMINI_API_KEY      models: gemini/gemini-2.0-flash, gemini/gemini-pro, etc.
-    xAI:       XAI_API_KEY         models: xai/grok-3, xai/grok-beta, etc.
-    Mistral:   MISTRAL_API_KEY     models: mistral/mistral-large, etc.
+    Anthropic: ANTHROPIC_API_KEY   models: claude-opus-4-5, claude-opus-4-5, etc.
+    Google:    GEMINI_API_KEY      models: gemini/gemini-2.5-flash, gemini/gemini-pro, etc.
+    xAI:       XAI_API_KEY         models: xai/grok-3-beta, xai/grok-beta, etc.
+    Mistral:   MISTRAL_API_KEY     models: mistral/mistral-large-latest, etc.
     Groq:      GROQ_API_KEY        models: groq/llama-3.3-70b, etc.
 
 Exit codes:
@@ -59,21 +59,19 @@ except ImportError:
     print("Error: litellm package not installed. Run: pip install litellm", file=sys.stderr)
     sys.exit(1)
 
-# Cost per 1M tokens (approximate, as of 2024)
+# Cost per 1M tokens (as of January 2026)
 MODEL_COSTS = {
-    "gpt-5.2": {"input": 2.50, "output": 10.00},
+    "gpt-5.2": {"input": 1.75, "output": 14.00},
+    "gpt-5.2-pro": {"input": 15.00, "output": 60.00},
     "gpt-4-turbo": {"input": 10.00, "output": 30.00},
-    "gpt-4": {"input": 30.00, "output": 60.00},
-    "gpt-3.5-turbo": {"input": 0.50, "output": 1.50},
     "o1": {"input": 15.00, "output": 60.00},
     "o1-mini": {"input": 3.00, "output": 12.00},
-    "claude-opus-4-5-20250514": {"input": 3.00, "output": 15.00},
-    "claude-opus-4-5-20250514": {"input": 15.00, "output": 75.00},
-    "gemini/gemini-2.0-flash": {"input": 0.075, "output": 0.30},
-    "gemini/gemini-pro": {"input": 0.50, "output": 1.50},
-    "xai/grok-3": {"input": 3.00, "output": 15.00},
-    "xai/grok-beta": {"input": 5.00, "output": 15.00},
-    "mistral/mistral-large": {"input": 2.00, "output": 6.00},
+    "claude-opus-4-5": {"input": 5.00, "output": 25.00},
+    "gemini/gemini-2.5-flash": {"input": 0.075, "output": 0.30},
+    "gemini/gemini-3-flash": {"input": 0.10, "output": 0.40},
+    "xai/grok-3-beta": {"input": 3.00, "output": 15.00},
+    "xai/grok-4": {"input": 5.00, "output": 20.00},
+    "mistral/mistral-large-latest": {"input": 2.00, "output": 6.00},
     "groq/llama-3.3-70b-versatile": {"input": 0.59, "output": 0.79},
     "deepseek/deepseek-chat": {"input": 0.14, "output": 0.28},
 }
@@ -744,10 +742,10 @@ def generate_diff(previous: str, current: str) -> str:
 def list_providers():
     providers = [
         ("OpenAI", "OPENAI_API_KEY", "gpt-5.2, gpt-4-turbo, o1"),
-        ("Anthropic", "ANTHROPIC_API_KEY", "claude-opus-4-5-20250514, claude-opus-4-5-20250514"),
-        ("Google", "GEMINI_API_KEY", "gemini/gemini-2.0-flash, gemini/gemini-pro"),
-        ("xAI", "XAI_API_KEY", "xai/grok-3, xai/grok-beta"),
-        ("Mistral", "MISTRAL_API_KEY", "mistral/mistral-large, mistral/codestral"),
+        ("Anthropic", "ANTHROPIC_API_KEY", "claude-opus-4-5, claude-opus-4-5"),
+        ("Google", "GEMINI_API_KEY", "gemini/gemini-2.5-flash, gemini/gemini-pro"),
+        ("xAI", "XAI_API_KEY", "xai/grok-3-beta, xai/grok-beta"),
+        ("Mistral", "MISTRAL_API_KEY", "mistral/mistral-large-latest, mistral/codestral"),
         ("Groq", "GROQ_API_KEY", "groq/llama-3.3-70b-versatile"),
         ("Together", "TOGETHER_API_KEY", "together_ai/meta-llama/Llama-3-70b"),
         ("Deepseek", "DEEPSEEK_API_KEY", "deepseek/deepseek-chat"),
@@ -807,14 +805,14 @@ Examples:
   python3 debate.py focus-areas
   python3 debate.py personas
   python3 debate.py profiles
-  python3 debate.py save-profile myprofile --models gpt-5.2,gemini/gemini-2.0-flash --focus assumptions
+  python3 debate.py save-profile myprofile --models gpt-5.2,gemini/gemini-2.5-flash --focus assumptions
         """
     )
     parser.add_argument("action", choices=["critique", "providers", "diff", "focus-areas", "personas", "profiles", "save-profile", "sessions"],
                         help="Action to perform")
     parser.add_argument("profile_name", nargs="?", help="Profile name (for save-profile action)")
     parser.add_argument("--models", "-m", default="gpt-5.2",
-                        help="Comma-separated list of models (e.g., gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3)")
+                        help="Comma-separated list of models (e.g., gpt-5.2,gemini/gemini-2.5-flash,xai/grok-3)")
     parser.add_argument("--round", "-r", type=int, default=1,
                         help="Current round number")
     parser.add_argument("--json", "-j", action="store_true",

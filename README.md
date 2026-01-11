@@ -140,7 +140,7 @@ Run debates directly from the command line:
 echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2
 
 # Multiple models
-echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3
+echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.5-flash,xai/grok-3
 
 # Focus on specific aspects
 echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2 --focus assumptions
@@ -217,7 +217,7 @@ Save frequently-used configurations:
 
 ```bash
 # Save a profile
-python3 debate.py save-profile rigorous-test --models gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3 --focus assumptions
+python3 debate.py save-profile rigorous-test --models gpt-5.2,gemini/gemini-2.5-flash,xai/grok-3 --focus assumptions
 
 # Use a profile
 echo "$STRATEGY" | python3 debate.py critique --profile rigorous-test
@@ -249,10 +249,10 @@ Final strategies are saved to `strategy-output.md` and include:
 | Provider | Models | API Key |
 |----------|--------|---------|
 | OpenAI | gpt-5.2, gpt-4-turbo, o1 | OPENAI_API_KEY |
-| Anthropic | claude-opus-4-5-20250514 | ANTHROPIC_API_KEY |
-| Google | gemini/gemini-2.0-flash, gemini/gemini-pro | GEMINI_API_KEY |
-| xAI | xai/grok-3, xai/grok-beta | XAI_API_KEY |
-| Mistral | mistral/mistral-large | MISTRAL_API_KEY |
+| Anthropic | claude-opus-4-5 | ANTHROPIC_API_KEY |
+| Google | gemini/gemini-2.5-flash, gemini/gemini-pro | GEMINI_API_KEY |
+| xAI | xai/grok-3-beta, xai/grok-beta | XAI_API_KEY |
+| Mistral | mistral/mistral-large-latest | MISTRAL_API_KEY |
 | Groq | groq/llama-3.3-70b-versatile | GROQ_API_KEY |
 
 ## Acknowledgments
