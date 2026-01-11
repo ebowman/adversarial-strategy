@@ -10,7 +10,7 @@ Using Richard Rumelt's "Good Strategy/Bad Strategy" framework, this tool helps y
 
 ## Features
 
-- **Multi-Model Debate**: Pit your strategy against GPT-4, Gemini, Grok, Claude, and other models
+- **Multi-Model Debate**: Pit your strategy against OpenAI and Anthropic models
 - **Intellectual Frameworks**: Built-in support for SCQA, Pyramid Principle, cognitive bias detection, and more
 - **Assumption Testing**: Identify and rate assumptions by risk level (H/M/L)
 - **Conflict Resolution**: Use Evaporating Cloud to resolve strategic trade-offs
@@ -71,8 +71,7 @@ Environment variables are visible to all processes running as your user. A confi
    ```json
    {
      "OPENAI_API_KEY": "sk-...",
-     "GEMINI_API_KEY": "...",
-     "XAI_API_KEY": "..."
+     "ANTHROPIC_API_KEY": "sk-ant-..."
    }
    ```
 
@@ -87,7 +86,7 @@ For CI/CD or when you prefer environment variables:
 
 ```bash
 export OPENAI_API_KEY="sk-..."
-export GEMINI_API_KEY="..."
+export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 
 ### Precedence
@@ -140,7 +139,7 @@ Run debates directly from the command line:
 echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2
 
 # Multiple models
-echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.5-flash,xai/grok-3
+echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2,claude-opus-4-5
 
 # Focus on specific aspects
 echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2 --focus assumptions
@@ -217,7 +216,7 @@ Save frequently-used configurations:
 
 ```bash
 # Save a profile
-python3 debate.py save-profile rigorous-test --models gpt-5.2,gemini/gemini-2.5-flash,xai/grok-3 --focus assumptions
+python3 debate.py save-profile rigorous-test --models gpt-5.2,claude-opus-4-5 --focus assumptions
 
 # Use a profile
 echo "$STRATEGY" | python3 debate.py critique --profile rigorous-test
@@ -248,12 +247,8 @@ Final strategies are saved to `strategy-output.md` and include:
 
 | Provider | Models | API Key |
 |----------|--------|---------|
-| OpenAI | gpt-5.2, gpt-4-turbo, o1 | OPENAI_API_KEY |
+| OpenAI | gpt-5.2, gpt-5.2-pro, o1 | OPENAI_API_KEY |
 | Anthropic | claude-opus-4-5 | ANTHROPIC_API_KEY |
-| Google | gemini/gemini-2.5-flash, gemini/gemini-pro | GEMINI_API_KEY |
-| xAI | xai/grok-3-beta, xai/grok-beta | XAI_API_KEY |
-| Mistral | mistral/mistral-large-latest | MISTRAL_API_KEY |
-| Groq | groq/llama-3.3-70b-versatile | GROQ_API_KEY |
 
 ## Acknowledgments
 

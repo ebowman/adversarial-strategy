@@ -5,31 +5,19 @@ Sends strategies to multiple LLMs for critique using LiteLLM.
 
 Usage:
     echo "strategy" | python3 debate.py critique --models gpt-5.2
-    echo "strategy" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.5-flash,xai/grok-3
+    echo "strategy" | python3 debate.py critique --models gpt-5.2,claude-opus-4-5
     echo "strategy" | python3 debate.py critique --models gpt-5.2 --focus assumptions
     echo "strategy" | python3 debate.py critique --models gpt-5.2 --persona rumelt
-    echo "strategy" | python3 debate.py critique --models gpt-5.2 --context ./market-analysis.md
-    echo "strategy" | python3 debate.py critique --models gpt-5.2 --profile rigorous
-    echo "strategy" | python3 debate.py critique --models gpt-5.2 --preserve-intent
-    echo "strategy" | python3 debate.py critique --models gpt-5.2 --session my-strategy
-    python3 debate.py critique --resume my-strategy
-    python3 debate.py diff --previous prev.md --current current.md
     python3 debate.py providers
-    python3 debate.py profiles
-    python3 debate.py sessions
 
 API Key Configuration:
     Keys are loaded from ~/.config/adversarial-strategy/keys.json (recommended)
     or from environment variables. Config file format:
-    {"OPENAI_API_KEY": "sk-...", "GEMINI_API_KEY": "..."}
+    {"OPENAI_API_KEY": "sk-...", "ANTHROPIC_API_KEY": "sk-ant-..."}
 
 Supported providers:
-    OpenAI:    OPENAI_API_KEY      models: gpt-5.2, gpt-4-turbo, o1, etc.
-    Anthropic: ANTHROPIC_API_KEY   models: claude-opus-4-5, claude-opus-4-5, etc.
-    Google:    GEMINI_API_KEY      models: gemini/gemini-2.5-flash, gemini/gemini-pro, etc.
-    xAI:       XAI_API_KEY         models: xai/grok-3-beta, xai/grok-beta, etc.
-    Mistral:   MISTRAL_API_KEY     models: mistral/mistral-large-latest, etc.
-    Groq:      GROQ_API_KEY        models: groq/llama-3.3-70b, etc.
+    OpenAI:    OPENAI_API_KEY      models: gpt-5.2, gpt-5.2-pro, o1
+    Anthropic: ANTHROPIC_API_KEY   models: claude-opus-4-5
 
 Exit codes:
     0 - Success
@@ -63,17 +51,8 @@ except ImportError:
 MODEL_COSTS = {
     "gpt-5.2": {"input": 1.75, "output": 14.00},
     "gpt-5.2-pro": {"input": 15.00, "output": 60.00},
-    "gpt-4-turbo": {"input": 10.00, "output": 30.00},
     "o1": {"input": 15.00, "output": 60.00},
-    "o1-mini": {"input": 3.00, "output": 12.00},
     "claude-opus-4-5": {"input": 5.00, "output": 25.00},
-    "gemini/gemini-2.5-flash": {"input": 0.075, "output": 0.30},
-    "gemini/gemini-3-flash": {"input": 0.10, "output": 0.40},
-    "xai/grok-3-beta": {"input": 3.00, "output": 15.00},
-    "xai/grok-4": {"input": 5.00, "output": 20.00},
-    "mistral/mistral-large-latest": {"input": 2.00, "output": 6.00},
-    "groq/llama-3.3-70b-versatile": {"input": 0.59, "output": 0.79},
-    "deepseek/deepseek-chat": {"input": 0.14, "output": 0.28},
 }
 
 DEFAULT_COST = {"input": 5.00, "output": 15.00}
@@ -741,14 +720,8 @@ def generate_diff(previous: str, current: str) -> str:
 
 def list_providers():
     providers = [
-        ("OpenAI", "OPENAI_API_KEY", "gpt-5.2, gpt-4-turbo, o1"),
-        ("Anthropic", "ANTHROPIC_API_KEY", "claude-opus-4-5, claude-opus-4-5"),
-        ("Google", "GEMINI_API_KEY", "gemini/gemini-2.5-flash, gemini/gemini-pro"),
-        ("xAI", "XAI_API_KEY", "xai/grok-3-beta, xai/grok-beta"),
-        ("Mistral", "MISTRAL_API_KEY", "mistral/mistral-large-latest, mistral/codestral"),
-        ("Groq", "GROQ_API_KEY", "groq/llama-3.3-70b-versatile"),
-        ("Together", "TOGETHER_API_KEY", "together_ai/meta-llama/Llama-3-70b"),
-        ("Deepseek", "DEEPSEEK_API_KEY", "deepseek/deepseek-chat"),
+        ("OpenAI", "OPENAI_API_KEY", "gpt-5.2, gpt-5.2-pro, o1"),
+        ("Anthropic", "ANTHROPIC_API_KEY", "claude-opus-4-5"),
     ]
     print("Supported providers:\n")
     for name, key, models in providers:

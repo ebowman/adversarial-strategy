@@ -90,10 +90,8 @@ Present the draft and ask if it captures their intent before proceeding.
 ## Step 2: Multi-Model Adversarial Debate
 
 Ask which models should critique the strategy:
-- gpt-5.2 (balanced, strong reasoning)
-- gemini/gemini-2.5-flash (fast, good for iteration)
-- xai/grok-3 (contrarian perspectives)
-- claude-opus-4-5 (deep analysis)
+- gpt-5.2 (OpenAI - balanced, strong reasoning)
+- claude-opus-4-5 (Anthropic - deep analysis)
 
 Run the debate using:
 
