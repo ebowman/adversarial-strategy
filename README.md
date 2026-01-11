@@ -20,13 +20,25 @@ Using Richard Rumelt's "Good Strategy/Bad Strategy" framework, this tool helps y
 ## Installation
 
 ```bash
-# 1. Install the plugin
-claude plugin add github:ebowman/adversarial-strategy
+# 1. Clone the plugin
+git clone https://github.com/ebowman/adversarial-strategy.git ~/.claude/plugins/adversarial-strategy
 
 # 2. Install Python dependency
 pip install litellm
 
 # 3. Configure API keys (see below)
+```
+
+Then launch Claude Code with the plugin:
+
+```bash
+claude --plugin-dir ~/.claude/plugins/adversarial-strategy
+```
+
+Or add to your shell profile for persistent use:
+
+```bash
+alias claude='claude --plugin-dir ~/.claude/plugins/adversarial-strategy'
 ```
 
 ## API Key Configuration
