@@ -18,7 +18,12 @@ Usage:
     python3 debate.py profiles
     python3 debate.py sessions
 
-Supported providers (set corresponding API key):
+API Key Configuration:
+    Keys are loaded from ~/.config/adversarial-strategy/keys.json (recommended)
+    or from environment variables. Config file format:
+    {"OPENAI_API_KEY": "sk-...", "GEMINI_API_KEY": "..."}
+
+Supported providers:
     OpenAI:    OPENAI_API_KEY      models: gpt-4o, gpt-4-turbo, o1, etc.
     Anthropic: ANTHROPIC_API_KEY   models: claude-sonnet-4-20250514, claude-opus-4-20250514, etc.
     Google:    GEMINI_API_KEY      models: gemini/gemini-2.0-flash, gemini/gemini-pro, etc.
@@ -75,12 +80,44 @@ MODEL_COSTS = {
 
 DEFAULT_COST = {"input": 5.00, "output": 15.00}
 
-PROFILES_DIR = Path.home() / ".config" / "adversarial-strategy" / "profiles"
-SESSIONS_DIR = Path.home() / ".config" / "adversarial-strategy" / "sessions"
+CONFIG_DIR = Path.home() / ".config" / "adversarial-strategy"
+KEYS_FILE = CONFIG_DIR / "keys.json"
+PROFILES_DIR = CONFIG_DIR / "profiles"
+SESSIONS_DIR = CONFIG_DIR / "sessions"
 CHECKPOINTS_DIR = Path.cwd() / ".adversarial-strategy-checkpoints"
+
+# Track which keys were loaded from config file vs environment
+_keys_from_config = set()
 
 MAX_RETRIES = 3
 RETRY_BASE_DELAY = 1.0  # seconds
+
+
+def load_api_keys():
+    """Load API keys from config file, falling back to environment variables.
+
+    Keys in the config file are set as environment variables so litellm can use them.
+    Environment variables take precedence (config file won't overwrite existing env vars).
+
+    Config file location: ~/.config/adversarial-strategy/keys.json
+    Format: {"OPENAI_API_KEY": "sk-...", "GEMINI_API_KEY": "..."}
+    """
+    global _keys_from_config
+
+    if not KEYS_FILE.exists():
+        return
+
+    try:
+        keys = json.loads(KEYS_FILE.read_text())
+        for key_name, key_value in keys.items():
+            if key_name.endswith("_API_KEY") and key_value:
+                # Only set if not already in environment (env vars take precedence)
+                if not os.environ.get(key_name):
+                    os.environ[key_name] = key_value
+                    _keys_from_config.add(key_name)
+    except (json.JSONDecodeError, IOError) as e:
+        print(f"Warning: Could not load keys from {KEYS_FILE}: {e}", file=sys.stderr)
+
 
 PRESERVE_INTENT_PROMPT = """
 **PRESERVE STRATEGIC INTENT**
@@ -717,10 +754,22 @@ def list_providers():
     ]
     print("Supported providers:\n")
     for name, key, models in providers:
-        status = "[set]" if os.environ.get(key) else "[not set]"
+        if os.environ.get(key):
+            if key in _keys_from_config:
+                status = "[config]"
+            else:
+                status = "[env]"
+        else:
+            status = "[not set]"
         print(f"  {name:12} {key:24} {status}")
         print(f"             Example models: {models}")
         print()
+
+    print(f"Config file: {KEYS_FILE}")
+    if KEYS_FILE.exists():
+        print("  (exists)")
+    else:
+        print("  (not found - create to store API keys securely)")
 
 
 def list_focus_areas():
@@ -740,6 +789,9 @@ def list_personas():
 
 
 def main():
+    # Load API keys from config file (falls back to environment variables)
+    load_api_keys()
+
     parser = argparse.ArgumentParser(
         description="Adversarial strategy debate with multiple LLMs",
         formatter_class=argparse.RawDescriptionHelpFormatter,

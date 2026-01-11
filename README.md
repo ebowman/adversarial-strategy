@@ -26,16 +26,47 @@ claude plugin add github:ebowman/adversarial-strategy
 # 2. Install Python dependency
 pip install litellm
 
-# 3. Set at least one API key
-export OPENAI_API_KEY="sk-..."
+# 3. Configure API keys (see below)
 ```
 
-Optional: Set additional provider keys for more debate perspectives:
-```bash
-export ANTHROPIC_API_KEY="sk-ant-..."
-export GEMINI_API_KEY="..."
-export XAI_API_KEY="..."
+## API Key Configuration
+
+API keys can be stored in a config file (recommended) or set as environment variables.
+
+### Option 1: Config File (Recommended)
+
+Create `~/.config/adversarial-strategy/keys.json`:
+
+```json
+{
+  "OPENAI_API_KEY": "sk-...",
+  "GEMINI_API_KEY": "...",
+  "XAI_API_KEY": "..."
+}
 ```
+
+Then restrict permissions so only you can read it:
+
+```bash
+chmod 600 ~/.config/adversarial-strategy/keys.json
+```
+
+### Option 2: Environment Variables
+
+```bash
+export OPENAI_API_KEY="sk-..."
+export GEMINI_API_KEY="..."
+```
+
+Note: Environment variables take precedence over the config file.
+
+### Check Configuration
+
+```bash
+python3 ~/.claude/skills/adversarial-strategy/scripts/debate.py providers
+```
+
+This shows which keys are configured and their source (`[config]`, `[env]`, or `[not set]`).
 
 ## Usage
 
