@@ -137,16 +137,16 @@ Run debates directly from the command line:
 
 ```bash
 # Basic critique
-echo "$STRATEGY" | python3 debate.py critique --models gpt-4o
+echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2
 
 # Multiple models
-echo "$STRATEGY" | python3 debate.py critique --models gpt-4o,gemini/gemini-2.0-flash,xai/grok-3
+echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3
 
 # Focus on specific aspects
-echo "$STRATEGY" | python3 debate.py critique --models gpt-4o --focus assumptions
+echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2 --focus assumptions
 
 # Use a professional persona
-echo "$STRATEGY" | python3 debate.py critique --models gpt-4o --persona "rumelt"
+echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2 --persona "rumelt"
 ```
 
 ### Available Focus Areas
@@ -217,7 +217,7 @@ Save frequently-used configurations:
 
 ```bash
 # Save a profile
-python3 debate.py save-profile rigorous-test --models gpt-4o,gemini/gemini-2.0-flash,xai/grok-3 --focus assumptions
+python3 debate.py save-profile rigorous-test --models gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3 --focus assumptions
 
 # Use a profile
 echo "$STRATEGY" | python3 debate.py critique --profile rigorous-test
@@ -229,7 +229,7 @@ Long debates can be saved and resumed:
 
 ```bash
 # Start a session
-echo "$STRATEGY" | python3 debate.py critique --models gpt-4o --session my-strategy
+echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2 --session my-strategy
 
 # Resume later
 python3 debate.py critique --resume my-strategy
@@ -248,8 +248,8 @@ Final strategies are saved to `strategy-output.md` and include:
 
 | Provider | Models | API Key |
 |----------|--------|---------|
-| OpenAI | gpt-4o, gpt-4-turbo, o1 | OPENAI_API_KEY |
-| Anthropic | claude-sonnet-4-20250514, claude-opus-4-20250514 | ANTHROPIC_API_KEY |
+| OpenAI | gpt-5.2, gpt-4-turbo, o1 | OPENAI_API_KEY |
+| Anthropic | claude-opus-4-5-20250514 | ANTHROPIC_API_KEY |
 | Google | gemini/gemini-2.0-flash, gemini/gemini-pro | GEMINI_API_KEY |
 | xAI | xai/grok-3, xai/grok-beta | XAI_API_KEY |
 | Mistral | mistral/mistral-large | MISTRAL_API_KEY |

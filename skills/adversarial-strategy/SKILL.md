@@ -203,10 +203,10 @@ Once the user approves the initial draft, send it to opponent models for critiqu
 Ask the user using AskUserQuestion:
 - "Which models should critique your strategy?"
   - Provide model options with descriptions:
-    - gpt-4o (balanced, strong reasoning)
+    - gpt-5.2 (balanced, strong reasoning)
     - gemini/gemini-2.0-flash (fast, good for iteration)
     - xai/grok-3 (contrarian perspectives)
-    - claude-opus-4-20250514 (deep analysis)
+    - claude-opus-4-5-20250514 (deep analysis)
   - Allow comma-separated selection
 
 ### Running the Debate

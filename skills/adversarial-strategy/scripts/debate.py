@@ -4,14 +4,14 @@ Adversarial strategy debate script.
 Sends strategies to multiple LLMs for critique using LiteLLM.
 
 Usage:
-    echo "strategy" | python3 debate.py critique --models gpt-4o
-    echo "strategy" | python3 debate.py critique --models gpt-4o,gemini/gemini-2.0-flash,xai/grok-3
-    echo "strategy" | python3 debate.py critique --models gpt-4o --focus assumptions
-    echo "strategy" | python3 debate.py critique --models gpt-4o --persona rumelt
-    echo "strategy" | python3 debate.py critique --models gpt-4o --context ./market-analysis.md
-    echo "strategy" | python3 debate.py critique --models gpt-4o --profile rigorous
-    echo "strategy" | python3 debate.py critique --models gpt-4o --preserve-intent
-    echo "strategy" | python3 debate.py critique --models gpt-4o --session my-strategy
+    echo "strategy" | python3 debate.py critique --models gpt-5.2
+    echo "strategy" | python3 debate.py critique --models gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3
+    echo "strategy" | python3 debate.py critique --models gpt-5.2 --focus assumptions
+    echo "strategy" | python3 debate.py critique --models gpt-5.2 --persona rumelt
+    echo "strategy" | python3 debate.py critique --models gpt-5.2 --context ./market-analysis.md
+    echo "strategy" | python3 debate.py critique --models gpt-5.2 --profile rigorous
+    echo "strategy" | python3 debate.py critique --models gpt-5.2 --preserve-intent
+    echo "strategy" | python3 debate.py critique --models gpt-5.2 --session my-strategy
     python3 debate.py critique --resume my-strategy
     python3 debate.py diff --previous prev.md --current current.md
     python3 debate.py providers
@@ -24,8 +24,8 @@ API Key Configuration:
     {"OPENAI_API_KEY": "sk-...", "GEMINI_API_KEY": "..."}
 
 Supported providers:
-    OpenAI:    OPENAI_API_KEY      models: gpt-4o, gpt-4-turbo, o1, etc.
-    Anthropic: ANTHROPIC_API_KEY   models: claude-sonnet-4-20250514, claude-opus-4-20250514, etc.
+    OpenAI:    OPENAI_API_KEY      models: gpt-5.2, gpt-4-turbo, o1, etc.
+    Anthropic: ANTHROPIC_API_KEY   models: claude-opus-4-5-20250514, claude-opus-4-5-20250514, etc.
     Google:    GEMINI_API_KEY      models: gemini/gemini-2.0-flash, gemini/gemini-pro, etc.
     xAI:       XAI_API_KEY         models: xai/grok-3, xai/grok-beta, etc.
     Mistral:   MISTRAL_API_KEY     models: mistral/mistral-large, etc.
@@ -61,14 +61,14 @@ except ImportError:
 
 # Cost per 1M tokens (approximate, as of 2024)
 MODEL_COSTS = {
-    "gpt-4o": {"input": 2.50, "output": 10.00},
+    "gpt-5.2": {"input": 2.50, "output": 10.00},
     "gpt-4-turbo": {"input": 10.00, "output": 30.00},
     "gpt-4": {"input": 30.00, "output": 60.00},
     "gpt-3.5-turbo": {"input": 0.50, "output": 1.50},
     "o1": {"input": 15.00, "output": 60.00},
     "o1-mini": {"input": 3.00, "output": 12.00},
-    "claude-sonnet-4-20250514": {"input": 3.00, "output": 15.00},
-    "claude-opus-4-20250514": {"input": 15.00, "output": 75.00},
+    "claude-opus-4-5-20250514": {"input": 3.00, "output": 15.00},
+    "claude-opus-4-5-20250514": {"input": 15.00, "output": 75.00},
     "gemini/gemini-2.0-flash": {"input": 0.075, "output": 0.30},
     "gemini/gemini-pro": {"input": 0.50, "output": 1.50},
     "xai/grok-3": {"input": 3.00, "output": 15.00},
@@ -743,8 +743,8 @@ def generate_diff(previous: str, current: str) -> str:
 
 def list_providers():
     providers = [
-        ("OpenAI", "OPENAI_API_KEY", "gpt-4o, gpt-4-turbo, o1"),
-        ("Anthropic", "ANTHROPIC_API_KEY", "claude-sonnet-4-20250514, claude-opus-4-20250514"),
+        ("OpenAI", "OPENAI_API_KEY", "gpt-5.2, gpt-4-turbo, o1"),
+        ("Anthropic", "ANTHROPIC_API_KEY", "claude-opus-4-5-20250514, claude-opus-4-5-20250514"),
         ("Google", "GEMINI_API_KEY", "gemini/gemini-2.0-flash, gemini/gemini-pro"),
         ("xAI", "XAI_API_KEY", "xai/grok-3, xai/grok-beta"),
         ("Mistral", "MISTRAL_API_KEY", "mistral/mistral-large, mistral/codestral"),
@@ -797,24 +797,24 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  echo "strategy" | python3 debate.py critique --models gpt-4o
-  echo "strategy" | python3 debate.py critique --models gpt-4o --focus assumptions
-  echo "strategy" | python3 debate.py critique --models gpt-4o --persona rumelt
-  echo "strategy" | python3 debate.py critique --models gpt-4o --context ./analysis.md
+  echo "strategy" | python3 debate.py critique --models gpt-5.2
+  echo "strategy" | python3 debate.py critique --models gpt-5.2 --focus assumptions
+  echo "strategy" | python3 debate.py critique --models gpt-5.2 --persona rumelt
+  echo "strategy" | python3 debate.py critique --models gpt-5.2 --context ./analysis.md
   echo "strategy" | python3 debate.py critique --profile rigorous
   python3 debate.py diff --previous old.md --current new.md
   python3 debate.py providers
   python3 debate.py focus-areas
   python3 debate.py personas
   python3 debate.py profiles
-  python3 debate.py save-profile myprofile --models gpt-4o,gemini/gemini-2.0-flash --focus assumptions
+  python3 debate.py save-profile myprofile --models gpt-5.2,gemini/gemini-2.0-flash --focus assumptions
         """
     )
     parser.add_argument("action", choices=["critique", "providers", "diff", "focus-areas", "personas", "profiles", "save-profile", "sessions"],
                         help="Action to perform")
     parser.add_argument("profile_name", nargs="?", help="Profile name (for save-profile action)")
-    parser.add_argument("--models", "-m", default="gpt-4o",
-                        help="Comma-separated list of models (e.g., gpt-4o,gemini/gemini-2.0-flash,xai/grok-3)")
+    parser.add_argument("--models", "-m", default="gpt-5.2",
+                        help="Comma-separated list of models (e.g., gpt-5.2,gemini/gemini-2.0-flash,xai/grok-3)")
     parser.add_argument("--round", "-r", type=int, default=1,
                         help="Current round number")
     parser.add_argument("--json", "-j", action="store_true",
@@ -909,7 +909,7 @@ Examples:
     # Load profile if specified
     if args.profile:
         profile = load_profile(args.profile)
-        if "models" in profile and args.models == "gpt-4o":
+        if "models" in profile and args.models == "gpt-5.2":
             args.models = profile["models"]
         if "focus" in profile and not args.focus:
             args.focus = profile["focus"]
