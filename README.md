@@ -19,18 +19,23 @@ Using Richard Rumelt's "Good Strategy/Bad Strategy" framework, this tool helps y
 
 ## Installation
 
-1. Clone or copy this plugin to your Claude Code plugins directory
-2. Install dependencies:
-   ```bash
-   pip install litellm
-   ```
-3. Set up API keys for your chosen providers:
-   ```bash
-   export OPENAI_API_KEY="sk-..."
-   export ANTHROPIC_API_KEY="sk-ant-..."
-   export GEMINI_API_KEY="..."
-   export XAI_API_KEY="..."
-   ```
+```bash
+# 1. Install the plugin
+claude plugin add github:ebowman/adversarial-strategy
+
+# 2. Install Python dependency
+pip install litellm
+
+# 3. Set at least one API key
+export OPENAI_API_KEY="sk-..."
+```
+
+Optional: Set additional provider keys for more debate perspectives:
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+export GEMINI_API_KEY="..."
+export XAI_API_KEY="..."
+```
 
 ## Usage
 
