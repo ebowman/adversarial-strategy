@@ -2,7 +2,9 @@
   "name": "adversarial-strategy",
   "version": "1.0.0",
   "description": "Develop rigorous Rumelt strategies (Diagnosis, Guiding Policy, Coherent Actions) through multi-model debate. Incorporates SCQA analysis, Pyramid Principle, cognitive bias detection, Inherent Simplicity, Evaporating Cloud, and assumption risk assessment. Claude actively participates alongside GPT, Gemini, Grok, and other models.",
-  "author": "adversarial-strategy",
-  "repository": "https://github.com/adversarial-strategy/adversarial-strategy",
+  "author": {
+    "name": "ebowman"
+  },
+  "repository": "https://github.com/ebowman/adversarial-strategy",
   "keywords": ["strategy", "rumelt", "diagnosis", "guiding-policy", "coherent-actions", "debate", "consensus", "scqa", "pyramid-principle", "cognitive-bias", "theory-of-constraints"]
 }
