@@ -19,40 +19,37 @@ Using Richard Rumelt's "Good Strategy/Bad Strategy" framework, this tool helps y
 
 ## Installation
 
-### 1. Get the Plugin
+### 1. Add the Plugin Marketplace
 
-**Option A: Clone directly to plugins directory**
 ```bash
-git clone https://github.com/ebowman/adversarial-strategy.git ~/.claude/plugins/adversarial-strategy
+claude plugin marketplace add github:ebowman/adversarial-strategy
 ```
 
-**Option B: Clone elsewhere and symlink (for development)**
+### 2. Install and Enable the Plugin
+
 ```bash
-git clone https://github.com/ebowman/adversarial-strategy.git ~/src/adversarial-strategy
-mkdir -p ~/.claude/plugins
-ln -s ~/src/adversarial-strategy ~/.claude/plugins/adversarial-strategy
+claude plugin install adversarial-strategy@ebowman-adversarial-strategy
 ```
 
-### 2. Install Python Dependency
+The plugin is automatically enabled after installation.
+
+### 3. Install Python Dependency
 
 ```bash
 pip install litellm
 ```
 
-### 3. Configure API Keys
+### 4. Configure API Keys
 
 See [API Key Configuration](#api-key-configuration) below.
 
-### 4. Launch Claude Code with the Plugin
+### Alternative: Development Setup
+
+If you want to modify the plugin, clone and use `--plugin-dir`:
 
 ```bash
-claude --plugin-dir ~/.claude/plugins/adversarial-strategy
-```
-
-For persistent use, add an alias to your shell profile (`~/.zshrc` or `~/.bashrc`):
-
-```bash
-alias claude='claude --plugin-dir ~/.claude/plugins/adversarial-strategy'
+git clone https://github.com/ebowman/adversarial-strategy.git ~/src/adversarial-strategy
+claude --plugin-dir ~/src/adversarial-strategy
 ```
 
 ## API Key Configuration

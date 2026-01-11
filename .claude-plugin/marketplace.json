@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ebowman-adversarial-strategy",
+  "description": "Adversarial strategy development plugin for Claude Code",
+  "owner": {
+    "name": "ebowman"
+  },
+  "plugins": [
+    {
+      "name": "adversarial-strategy",
+      "description": "Develop rigorous strategies using Rumelt's framework through multi-model adversarial debate",
+      "version": "1.0.0",
+      "author": {
+        "name": "ebowman"
+      },
+      "source": ".",
+      "category": "productivity"
+    }
+  ]
+}
