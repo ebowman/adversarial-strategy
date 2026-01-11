@@ -33,40 +33,56 @@ pip install litellm
 
 API keys can be stored in a config file (recommended) or set as environment variables.
 
+### Why Use a Config File?
+
+Environment variables are visible to all processes running as your user. A config file with restricted permissions is more secure—only you can read it.
+
 ### Option 1: Config File (Recommended)
 
-Create `~/.config/adversarial-strategy/keys.json`:
+1. Create the config directory:
+   ```bash
+   mkdir -p ~/.config/adversarial-strategy
+   ```
 
-```json
-{
-  "OPENAI_API_KEY": "sk-...",
-  "GEMINI_API_KEY": "...",
-  "XAI_API_KEY": "..."
-}
-```
+2. Create `~/.config/adversarial-strategy/keys.json` with your API keys:
+   ```json
+   {
+     "OPENAI_API_KEY": "sk-...",
+     "GEMINI_API_KEY": "...",
+     "XAI_API_KEY": "..."
+   }
+   ```
 
-Then restrict permissions so only you can read it:
-
-```bash
-chmod 600 ~/.config/adversarial-strategy/keys.json
-```
+3. Restrict permissions so only you can read it:
+   ```bash
+   chmod 600 ~/.config/adversarial-strategy/keys.json
+   ```
 
 ### Option 2: Environment Variables
+
+For CI/CD or when you prefer environment variables:
 
 ```bash
 export OPENAI_API_KEY="sk-..."
 export GEMINI_API_KEY="..."
 ```
 
-Note: Environment variables take precedence over the config file.
+### Precedence
 
-### Check Configuration
+Environment variables take precedence over the config file. This allows you to:
+- Store your usual keys in the config file
+- Override temporarily with env vars when needed (e.g., testing, CI)
+
+### Verify Your Configuration
 
 ```bash
 python3 ~/.claude/skills/adversarial-strategy/scripts/debate.py providers
 ```
 
-This shows which keys are configured and their source (`[config]`, `[env]`, or `[not set]`).
+Output shows each provider's status:
+- `[config]` — key loaded from keys.json
+- `[env]` — key from environment variable
+- `[not set]` — key not configured
 
 ## Usage
 
