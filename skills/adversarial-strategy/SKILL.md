@@ -176,7 +176,7 @@ Follow this focus sequence for maximum effectiveness:
 ### Running the Debate
 
 ```bash
-cat <<'STRATEGY_EOF' | python3 ~/.claude/plugins/cache/ebowman-plugins/adversarial-strategy/1.0.0/skills/adversarial-strategy/scripts/debate.py critique --models MODEL_LIST --round N --focus FOCUS_AREA --json
+cat <<'STRATEGY_EOF' | ~/.config/adversarial-strategy/venv/bin/python3 ~/.claude/plugins/cache/ebowman-adversarial-strategy/adversarial-strategy/1.0.0/skills/adversarial-strategy/scripts/debate.py critique --models MODEL_LIST --round N --focus FOCUS_AREA --json
 <strategy content here>
 STRATEGY_EOF
 ```

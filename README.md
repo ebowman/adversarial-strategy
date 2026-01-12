@@ -24,36 +24,27 @@ Using Richard Rumelt's "Good Strategy/Bad Strategy" framework, this tool helps y
 
 ## Installation
 
-### 1. Add the Plugin Marketplace
+### Quick Install
 
 ```bash
-claude plugin marketplace add github:ebowman/adversarial-strategy
-```
-
-### 2. Install and Enable the Plugin
-
-```bash
+# 1. Add the marketplace and install the plugin
+claude plugin marketplace add ebowman/adversarial-strategy
 claude plugin install adversarial-strategy@ebowman-adversarial-strategy
+
+# 2. Run the setup script to create venv and install dependencies
+~/.claude/plugins/cache/ebowman-adversarial-strategy/adversarial-strategy/1.0.0/setup.sh
+
+# 3. Configure API keys (see below)
 ```
-
-The plugin is automatically enabled after installation.
-
-### 3. Install Python Dependency
-
-```bash
-pip install litellm
-```
-
-### 4. Configure API Keys
-
-See [API Key Configuration](#api-key-configuration) below.
 
 ### Alternative: Development Setup
 
-If you want to modify the plugin, clone and use `--plugin-dir`:
+If you want to modify the plugin:
 
 ```bash
-git clone https://github.com/ebowman/adversarial-strategy.git ~/src/adversarial-strategy
+git clone git@github.com:ebowman/adversarial-strategy.git ~/src/adversarial-strategy
+cd ~/src/adversarial-strategy
+./setup.sh
 claude --plugin-dir ~/src/adversarial-strategy
 ```
 
@@ -103,7 +94,7 @@ Environment variables take precedence over the config file. This allows you to:
 ### Verify Your Configuration
 
 ```bash
-python3 ~/.claude/skills/adversarial-strategy/scripts/debate.py providers
+~/.config/adversarial-strategy/venv/bin/python3 ~/.claude/plugins/cache/ebowman-adversarial-strategy/adversarial-strategy/1.0.0/skills/adversarial-strategy/scripts/debate.py providers
 ```
 
 Output shows each provider's status:
