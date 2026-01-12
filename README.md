@@ -11,7 +11,12 @@ Using Richard Rumelt's "Good Strategy/Bad Strategy" framework, this tool helps y
 ## Features
 
 - **Multi-Model Debate**: Pit your strategy against OpenAI and Anthropic models
-- **Intellectual Frameworks**: Built-in support for SCQA, Pyramid Principle, cognitive bias detection, and more
+- **Rumelt Pre-Screen**: Catch "bad strategy" markers BEFORE wasting debate rounds
+- **Periodic Rumelt Checkpoints**: Prevent "death by committee" dilution during debate
+- **Quality Scoring**: 0-30 scale with clear thresholds for strategy readiness
+- **Smart Press**: Auto-triggers confirmation when models agree suspiciously fast
+- **Focus Progression**: Guided sequence (diagnosis → assumptions → coherence → feasibility)
+- **Intellectual Frameworks**: Built-in SCQA, Pyramid Principle, cognitive bias detection
 - **Assumption Testing**: Identify and rate assumptions by risk level (H/M/L)
 - **Conflict Resolution**: Use Evaporating Cloud to resolve strategic trade-offs
 - **Rumelt Feedback**: Simulated feedback from Richard Rumelt's perspective
@@ -115,11 +120,25 @@ Invoke the skill in Claude Code:
 /adversarial-strategy
 ```
 
-Claude will guide you through:
-1. Describing your strategic challenge
-2. Drafting an initial Rumelt strategy
-3. Running multi-model debate to stress-test your strategy
-4. Iterating until consensus is reached
+### Workflow
+
+Claude will guide you through this optimized workflow:
+
+1. **Input Gathering** - Describe challenge or provide existing document
+2. **Interview Mode** (optional) - Deep dive into context, stakeholders, constraints
+3. **Draft Strategy** - Create initial Rumelt strategy with framework analysis
+4. **Rumelt Pre-Screen** - Check for "bad strategy" markers BEFORE debate
+5. **Multi-Model Debate** - Iterative critique with focus progression
+6. **Rumelt Checkpoints** - Every 2 rounds, verify strategic clarity maintained
+7. **Quality Scoring** - Track improvement toward 25/30 threshold
+8. **Finalize** - Output strategy with full documentation
+
+### Key Insight: Rumelt Early and Often
+
+The most valuable critique comes from Rumelt's "bad strategy" framework. This plugin applies it:
+- **Before debate** (Pre-Screen): Don't waste rounds on fundamentally flawed strategies
+- **During debate** (Checkpoints): Prevent critique from diluting distinctive choices
+- **After debate** (Simulation): Detailed feedback in Rumelt's voice
 
 ### Interview Mode
 
@@ -159,12 +178,40 @@ echo "$STRATEGY" | python3 debate.py critique --models gpt-5.2 --persona "rumelt
 
 ### Available Personas
 
-- `rumelt` - Richard Rumelt's critical perspective
-- `strategist` - Senior strategy consultant
-- `skeptic` - Devil's advocate perspective
-- `operator` - Execution-focused viewpoint
-- `competitor` - Competitive response simulation
-- `board-member` - Governance perspective
+| Persona | When to Use |
+|---------|-------------|
+| `rumelt` | First round, every 2 rounds as checkpoint |
+| `strategist` | General critique, any round |
+| `skeptic` | Final validation before consensus |
+| `operator` | When actions seem unrealistic |
+| `competitor` | When competitive dynamics are central |
+| `board-member` | When governance/risk concerns are high |
+
+### Recommended Focus Progression
+
+For maximum effectiveness, follow this sequence:
+
+| Round | Focus | Purpose |
+|-------|-------|---------|
+| 1 | `diagnosis` | Is this even the right problem? |
+| 2 | `assumptions` | What are we taking for granted? |
+| 3 | `coherence` | Do actions reinforce each other? |
+| 4 | `feasibility` | Can we actually execute this? |
+| 5+ | `risks`, `alternatives` | What could go wrong? |
+
+### Quality Scoring
+
+Strategies are rated on a 0-30 scale:
+
+- **Diagnosis Quality** (0-10): Specificity, evidence, focus, root cause
+- **Guiding Policy Quality** (0-10): Policy vs goal, leverage, focus, coherence
+- **Action Coherence** (0-10): Mutual reinforcement, sequencing, specificity, resource focus
+
+**Thresholds:**
+- 25+: Ready for execution
+- 20-24: Good, minor refinements needed
+- 15-19: Significant issues, more debate needed
+- <15: Fundamental problems, revisit diagnosis
 
 ## Intellectual Frameworks
 

@@ -74,6 +74,7 @@ Conduct a structured interview covering:
 
 Create a complete Rumelt strategy with these sections:
 
+### Required Strategy Sections:
 - Executive Summary
 - Diagnosis (Challenge, Critical Factors, Evidence, What We're NOT Solving)
 - Guiding Policy (Core Approach, Implications, What This Rules Out, Sources of Leverage)
@@ -83,27 +84,133 @@ Create a complete Rumelt strategy with these sections:
 - Risks & Mitigations
 - Open Questions
 
+### Required Framework Analysis Section:
+
+Every draft MUST include explicit framework analysis:
+
+```markdown
+## Framework Analysis
+
+### SCQA Flow
+- **Situation**: [Current context everyone agrees on]
+- **Complication**: [The change/problem requiring action]
+- **Question**: [The strategic question this answers]
+- **Answer**: [The strategy's answer - should match Executive Summary]
+
+### Inherent Simplicity (Theory of Constraints)
+- **THE Constraint**: [The single most limiting factor]
+- **Strategy Addresses It**: [Yes/No with rationale]
+
+### Pyramid Principle Check
+- Recommendation clear upfront: [Yes/No]
+- Supporting arguments well-grouped: [Yes/No]
+
+### Confirmation Bias Check
+- Evidence that would DISPROVE this strategy: [List]
+- Alternative explanations considered: [List]
+```
+
 Present the draft and ask if it captures their intent before proceeding.
+
+---
+
+## Step 1.5: Rumelt Pre-Screen (CRITICAL)
+
+**Before any multi-model debate**, run a Rumelt Bad Strategy Check on the draft.
+
+### Bad Strategy Markers to Flag:
+
+1. **Fluff**: Buzzwords and jargon masking lack of thought
+   - Test: Can you explain this to a smart 12-year-old?
+
+2. **Failure to Face the Challenge**: Not acknowledging the real problem
+   - Test: Does the diagnosis name a specific, uncomfortable truth?
+
+3. **Mistaking Goals for Strategy**: "Our strategy is to grow 20%"
+   - Test: Is the guiding policy a POLICY (how) or a GOAL (what)?
+
+4. **Bad Strategic Objectives**: Goals that don't address the challenge
+   - Test: Do the actions directly attack the diagnosed problem?
+
+### Pre-Screen Output Format:
+
+```markdown
+## Rumelt Pre-Screen Results
+
+| Marker | Status | Evidence |
+|--------|--------|----------|
+| Fluff | PASS/FAIL | [Quote problematic text or "None found"] |
+| Facing the Challenge | PASS/FAIL | [Assessment] |
+| Policy vs Goal | PASS/FAIL | [Assessment] |
+| Action-Challenge Alignment | PASS/FAIL | [Assessment] |
+
+**Overall**: READY FOR DEBATE / NEEDS REVISION
+
+**If NEEDS REVISION**: [Specific issues to fix before debate]
+```
+
+**If any marker FAILS**: Revise the draft before proceeding to debate. Do NOT waste debate rounds on a fundamentally flawed strategy.
 
 ---
 
 ## Step 2: Multi-Model Adversarial Debate
 
+### Model Selection
 Ask which models should critique the strategy:
 - gpt-5.2 (OpenAI - balanced, strong reasoning)
 - claude-opus-4-5 (Anthropic - deep analysis)
 
-Run the debate using:
+### Recommended Focus Progression
+
+Follow this focus sequence for maximum effectiveness:
+
+| Round | Focus | Purpose |
+|-------|-------|---------|
+| 1 | `diagnosis` | Is this even the right problem? |
+| 2 | `assumptions` | What are we taking for granted? |
+| 3 | `coherence` | Do actions reinforce each other? |
+| 4 | `feasibility` | Can we actually execute this? |
+| 5+ | `risks`, `alternatives` | What could go wrong? Other approaches? |
+
+### Running the Debate
 
 ```bash
-cat <<'STRATEGY_EOF' | python3 ~/.claude/plugins/cache/ebowman-plugins/adversarial-strategy/1.0.0/skills/adversarial-strategy/scripts/debate.py critique --models MODEL_LIST --round N --json
+cat <<'STRATEGY_EOF' | python3 ~/.claude/plugins/cache/ebowman-plugins/adversarial-strategy/1.0.0/skills/adversarial-strategy/scripts/debate.py critique --models MODEL_LIST --round N --focus FOCUS_AREA --json
 <strategy content here>
 STRATEGY_EOF
 ```
 
-Optional flags:
-- `--focus assumptions|coherence|diagnosis|feasibility|risks|alternatives`
-- `--persona rumelt|strategist|skeptic|operator|competitor|board-member`
+### Persona Selection Guide
+
+Use personas strategically based on what the strategy needs:
+
+| Persona | When to Use |
+|---------|-------------|
+| `rumelt` | First round, and every 2 rounds as checkpoint |
+| `strategist` | General critique, any round |
+| `skeptic` | Final validation before declaring consensus |
+| `operator` | When actions seem unrealistic or uncoordinated |
+| `competitor` | When competitive dynamics are central |
+| `board-member` | When governance/risk concerns are high |
+
+---
+
+## Step 2.5: Rumelt Checkpoint (Every 2 Rounds)
+
+**After rounds 2, 4, 6, etc.**, pause and ask:
+
+> "Has this strategy maintained its strategic clarity, or has debate diluted it into something generic and safe?"
+
+### Checkpoint Questions:
+1. Is the diagnosis still SPECIFIC to this situation (not generic)?
+2. Does the guiding policy still RULE THINGS OUT (not try to do everything)?
+3. Do the actions still CONCENTRATE resources (not scatter them)?
+4. Has the strategy become "death by committee" - safe but toothless?
+
+**If dilution detected**:
+- Flag the specific areas that have become generic
+- Restore distinctive choices from earlier versions
+- Consider whether critique was valid improvement or loss of nerve
 
 ---
 
@@ -111,37 +218,69 @@ Optional flags:
 
 You are NOT just an orchestrator - actively participate by:
 
-1. **Providing independent critique** using these frameworks:
-   - SCQA Analysis (Situation-Complication-Question-Answer)
-   - Pyramid Principle (recommendation upfront, structured support)
-   - Confirmation Bias Detection (what would disprove this?)
-   - Cognitive Bias Awareness (anchoring, overconfidence, sunk cost, status quo)
-   - Inherent Simplicity (what is THE constraint?)
-   - Evaporating Cloud (resolve apparent trade-offs)
-   - Assumption Risk Assessment (H/M/L ratings)
+1. **Providing independent critique** using the frameworks (SCQA, Pyramid, Inherent Simplicity, etc.)
 
-2. **Evaluating opponent critiques** for validity vs preference
+2. **Evaluating opponent critiques** for validity vs preference:
+   - Is this a substantive issue or stylistic preference?
+   - Would addressing this strengthen or dilute the strategy?
 
 3. **Synthesizing revisions** that preserve strategic intent
+
+4. **Flagging when debate is diluting the strategy** - more critique isn't always better
 
 ---
 
 ## Step 4: Iteration & Convergence
 
+### Quality Score Assessment
+
+Rate the strategy on this scale after each round:
+
+```
+Diagnosis Quality (0-10):
+- Specificity (0-3): Is it about THIS situation?
+- Evidence (0-3): Based on data, not assumptions?
+- Focus (0-2): Identifies THE constraint?
+- Root cause (0-2): Addresses cause, not symptoms?
+
+Guiding Policy Quality (0-10):
+- Policy vs Goal (0-3): Is it a policy, not a goal?
+- Leverage (0-3): Does it create advantage?
+- Focus (0-2): Does it rule things out?
+- Coherence (0-2): Does it enable the actions?
+
+Action Coherence (0-10):
+- Mutual reinforcement (0-3): Do actions help each other?
+- Sequencing (0-2): Clear dependencies?
+- Specificity (0-3): Concrete enough to execute?
+- Resource focus (0-2): Concentrated, not scattered?
+
+TOTAL: /30
+```
+
+### Quality Thresholds:
+- **25+**: Ready for execution
+- **20-24**: Good, minor refinements needed
+- **15-19**: Significant issues, more debate needed
+- **<15**: Fundamental problems, revisit diagnosis
+
+### Convergence Rules:
 - Maximum 10 rounds per cycle
-- ALL models AND you must agree for convergence
-- If models agree too quickly (rounds 1-2), use `--press` flag
-- Quality over speed
+- ALL models AND you must agree
+- Quality score must be 20+ for convergence
+- If models agree in rounds 1-2, automatically press for confirmation
+- Quality over speed - don't rush to agreement
 
 ---
 
 ## Step 5: Finalize & Output
 
 When consensus is reached:
-1. Verify against quality checklist
-2. Display complete strategy
-3. Write to `strategy-output.md`
-4. Provide summary (rounds, models, key refinements, cost)
+1. Run final Rumelt check (has strategic clarity been maintained?)
+2. Calculate and display final quality score
+3. Display complete strategy
+4. Write to `strategy-output.md`
+5. Provide summary (rounds, models, key refinements, cost, quality score progression)
 
 ---
 
@@ -151,25 +290,44 @@ Offer options:
 - Accept this strategy
 - Make specific changes (no debate)
 - Run another debate cycle
-- Get Rumelt feedback simulation
+- Get detailed Rumelt feedback simulation
 
 ---
 
 ## Step 7: Rumelt Feedback Simulation
 
-Provide critique as Richard Rumelt would:
-- "What is the kernel of your strategy?"
-- "Is your guiding policy actually a policy, or a goal?"
-- "Do your actions create focused effort or scatter resources?"
+Provide detailed critique as Richard Rumelt would:
 
-Flag bad strategy signs: Fluff, failure to face the challenge, mistaking goals for strategy.
+### Rumelt's Questions:
+1. "What is the kernel of your strategy? Can you state it in one paragraph?"
+2. "Why does your diagnosis identify THIS as the critical factor? What evidence?"
+3. "Your guiding policy - is it actually a policy, or is it a goal in disguise?"
+4. "Do your actions create focused effort, or do they scatter resources across too many fronts?"
+5. "What makes this strategy GOOD rather than just a strategy?"
+
+### What Rumelt Would Praise:
+[Identify specific elements that exemplify good strategy]
+
+### What Rumelt Would Challenge:
+[Identify specific weaknesses or areas of concern]
+
+### Rumelt's Suggested Improvements:
+[Concrete recommendations in Rumelt's voice]
 
 ---
 
 ## Remember
 
-1. You are an active participant, not just an orchestrator
-2. Quality over speed - don't rush to agreement
-3. Challenge lazy thinking - including your own
-4. Preserve strategic intent - don't let critique dilute focus
-5. The goal is a GOOD strategy, not consensus on a mediocre one
+1. **Rumelt check EARLY and OFTEN** - don't wait until the end
+2. **You are an active participant**, not just an orchestrator
+3. **Quality over speed** - don't rush to agreement
+4. **Watch for dilution** - more critique can make strategies worse
+5. **Preserve strategic intent** - distinctive choices matter
+6. **The goal is a GOOD strategy**, not consensus on a mediocre one
+
+A good strategy is:
+- **Specific** to the situation (not generic)
+- **Actionable** (not aspirational)
+- **Focused** (not scattered)
+- **Coherent** (actions reinforce each other)
+- **Honest** about trade-offs and risks

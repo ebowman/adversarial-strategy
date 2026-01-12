@@ -960,6 +960,27 @@ Examples:
     successful = [r for r in results if not r.error]
     all_agreed = all(r.agreed for r in successful) if successful else False
 
+    # Smart Press: Auto-trigger press mode if models agree too quickly (rounds 1-2)
+    auto_pressed = False
+    if all_agreed and args.round <= 2 and not args.press:
+        print(f"\n[Auto-Press] Models agreed in round {args.round} - pressing for confirmation...", file=sys.stderr)
+        press_results = call_models_parallel(
+            models, spec, args.round, True,  # press=True
+            args.focus, args.persona, context, args.preserve_intent
+        )
+        press_successful = [r for r in press_results if not r.error]
+        press_all_agreed = all(r.agreed for r in press_successful) if press_successful else False
+
+        if press_all_agreed:
+            print("[Auto-Press] Confirmation received - agreement is genuine", file=sys.stderr)
+        else:
+            print("[Auto-Press] Models found issues on closer inspection", file=sys.stderr)
+            # Replace results with press results
+            results = press_results
+            successful = press_successful
+            all_agreed = press_all_agreed
+            auto_pressed = True
+
     # Save checkpoint after each round
     session_id = session_state.session_id if session_state else args.session
     if session_id or args.session:
@@ -986,6 +1007,7 @@ Examples:
     if args.json:
         output = {
             "all_agreed": all_agreed,
+            "auto_pressed": auto_pressed,
             "round": args.round,
             "models": models,
             "focus": args.focus,

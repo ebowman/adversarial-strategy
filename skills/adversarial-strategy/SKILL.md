@@ -1,6 +1,6 @@
 ---
 name: adversarial-strategy
-description: Develop rigorous Rumelt strategies (Diagnosis, Guiding Policy, Coherent Actions) through multi-model adversarial debate with GPT, Gemini, Grok, and other LLMs.
+description: Develop rigorous Rumelt strategies through multi-model adversarial debate with GPT and Claude models. Use when user wants to create or refine a strategy document.
 allowed-tools: Bash, Read, Write, AskUserQuestion
 ---
 
@@ -43,9 +43,7 @@ A coordinated set of actions that carry out the guiding policy:
 
 ## Step 0: Input Gathering
 
-When the user invokes this skill, first determine the starting point.
-
-Ask the user using the AskUserQuestion tool:
+First determine the starting point. Ask the user:
 
 **Question 1: Starting Point**
 - "Do you have an existing strategy document to refine, or should we develop one from scratch?"
@@ -55,507 +53,278 @@ Ask the user using the AskUserQuestion tool:
 - "How thorough should our initial exploration be?"
   - Options: "Quick start (jump to drafting)" | "Standard interview (key questions)" | "Deep dive (comprehensive exploration)"
 
-If they have an existing document, use the Read tool to load it. Otherwise, proceed to Step 0.5 or Step 1 based on their interview depth preference.
+If they have an existing document, use the Read tool to load it. Otherwise, proceed to interview or drafting.
 
 ---
 
 ## Step 0.5: Interview Mode (if selected)
 
-Conduct a structured interview to understand the strategic challenge. Use the AskUserQuestion tool for each section, asking 2-3 questions at a time.
+Conduct a structured interview covering:
 
-### A. Context & Background
-- What organization or situation is this strategy for?
-- What is the current state? What has led to this moment?
-- What recent changes or events are driving the need for strategy?
-
-### B. The Challenge
-- What is the core problem or opportunity you're facing?
-- What have you tried before? What worked and what didn't?
-- What happens if you do nothing?
-
-### C. Stakeholders
-- Who are the key stakeholders affected by this strategy?
-- What are their interests and concerns?
-- Who has power to enable or block the strategy?
-
-### D. Constraints & Resources
-- What resources are available (financial, human, time)?
-- What constraints must you work within?
-- What is non-negotiable?
-
-### E. Competitive Landscape (if applicable)
-- Who are the key competitors or alternative solutions?
-- What advantages do you have? What disadvantages?
-- How might competitors respond to your strategy?
-
-### F. Success Criteria
-- How will you know if the strategy is working?
-- What does success look like in 1 year? 3 years?
-- What would failure look like?
-
-### G. Risks & Uncertainties
-- What are the biggest unknowns?
-- What could go wrong?
-- What assumptions are you making?
-
-After completing the interview, synthesize the responses into a comprehensive brief before drafting the strategy.
+- **Context & Background**: Organization, current state, what's driving the need
+- **The Challenge**: Core problem, past attempts, consequences of inaction
+- **Stakeholders**: Who's affected, their interests, who can enable/block
+- **Constraints & Resources**: What's available, what's non-negotiable
+- **Competitive Landscape**: Competitors, advantages/disadvantages
+- **Success Criteria**: How to measure success, what failure looks like
+- **Risks & Uncertainties**: Biggest unknowns, what could go wrong
 
 ---
 
 ## Step 1: Draft the Initial Strategy
 
-Based on the user's input (existing document, interview, or description), draft a complete Rumelt strategy.
+Create a complete Rumelt strategy with these sections:
 
-### Required Sections:
+### Required Strategy Sections:
+- Executive Summary
+- Diagnosis (Challenge, Critical Factors, Evidence, What We're NOT Solving)
+- Guiding Policy (Core Approach, Implications, What This Rules Out, Sources of Leverage)
+- Coherent Actions (Immediate 0-30 days, Near-term 30-90 days, Medium-term 90-180 days, Dependencies)
+- Assumptions Register (with H/M/L risk ratings)
+- Success Metrics
+- Risks & Mitigations
+- Open Questions
+
+### Required Framework Analysis Section:
+
+Every draft MUST include explicit framework analysis:
 
 ```markdown
-# [Strategy Name]
+## Framework Analysis
 
-## Executive Summary
-[2-3 sentences capturing the essence of the strategy]
+### SCQA Flow
+- **Situation**: [Current context everyone agrees on]
+- **Complication**: [The change/problem requiring action]
+- **Question**: [The strategic question this answers]
+- **Answer**: [The strategy's answer - should match Executive Summary]
 
-## Diagnosis
+### Inherent Simplicity (Theory of Constraints)
+- **THE Constraint**: [The single most limiting factor]
+- **Strategy Addresses It**: [Yes/No with rationale]
 
-### The Challenge
-[Clear statement of the core challenge - one paragraph]
+### Pyramid Principle Check
+- Recommendation clear upfront: [Yes/No]
+- Supporting arguments well-grouped: [Yes/No]
 
-### Critical Factors
-[Bulleted list of the most important aspects of the situation]
-
-### Evidence Base
-[What data, observations, or analysis supports this diagnosis?]
-
-### What We're NOT Solving
-[Explicitly state what is out of scope]
-
-## Guiding Policy
-
-### Core Approach
-[One clear statement of the chosen approach]
-
-### What This Means
-[2-3 bullet points explaining implications of this policy]
-
-### What This Rules Out
-[Explicitly state what approaches are NOT being taken]
-
-### Sources of Leverage
-[How does this policy create advantage or focus?]
-
-## Coherent Actions
-
-### Immediate Actions (0-30 days)
-[Specific, coordinated actions to begin immediately]
-
-### Near-term Actions (30-90 days)
-[Actions that build on immediate actions]
-
-### Medium-term Actions (90-180 days)
-[Actions that require earlier work to be complete]
-
-### Dependencies & Sequencing
-[How do actions depend on and reinforce each other?]
-
-## Assumptions Register
-
-| Assumption | Category | Risk Rating | Validation Approach |
-|------------|----------|-------------|---------------------|
-| [Statement] | [Market/Capability/Resource/Environment] | H/M/L | [How to test] |
-
-## Success Metrics
-[How will we measure progress and success?]
-
-## Risks & Mitigations
-
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| [Risk description] | H/M/L | H/M/L | [Mitigation approach] |
-
-## Open Questions
-[What remains uncertain or requires further investigation?]
+### Confirmation Bias Check
+- Evidence that would DISPROVE this strategy: [List]
+- Alternative explanations considered: [List]
 ```
 
-### Before Presenting Draft
+Present the draft and ask if it captures their intent before proceeding.
 
-Ask 2-4 clarifying questions using AskUserQuestion to fill any gaps:
-- Specific aspects of the challenge that need clarification
-- Resource constraints or timeline requirements
-- Key stakeholder concerns
-- Success criteria preferences
+---
 
-### Present the Draft
+## Step 1.5: Rumelt Pre-Screen (CRITICAL)
 
-After drafting, present the complete strategy to the user and ask:
-- "Does this capture the essence of your challenge?"
-- "Are there any critical aspects missing from the diagnosis?"
-- "Does the guiding policy feel right?"
+**Before any multi-model debate**, run a Rumelt Bad Strategy Check on the draft.
 
-Make any requested adjustments before proceeding to debate.
+### Bad Strategy Markers to Flag:
+
+1. **Fluff**: Buzzwords and jargon masking lack of thought
+   - Test: Can you explain this to a smart 12-year-old?
+
+2. **Failure to Face the Challenge**: Not acknowledging the real problem
+   - Test: Does the diagnosis name a specific, uncomfortable truth?
+
+3. **Mistaking Goals for Strategy**: "Our strategy is to grow 20%"
+   - Test: Is the guiding policy a POLICY (how) or a GOAL (what)?
+
+4. **Bad Strategic Objectives**: Goals that don't address the challenge
+   - Test: Do the actions directly attack the diagnosed problem?
+
+### Pre-Screen Output Format:
+
+```markdown
+## Rumelt Pre-Screen Results
+
+| Marker | Status | Evidence |
+|--------|--------|----------|
+| Fluff | PASS/FAIL | [Quote problematic text or "None found"] |
+| Facing the Challenge | PASS/FAIL | [Assessment] |
+| Policy vs Goal | PASS/FAIL | [Assessment] |
+| Action-Challenge Alignment | PASS/FAIL | [Assessment] |
+
+**Overall**: READY FOR DEBATE / NEEDS REVISION
+
+**If NEEDS REVISION**: [Specific issues to fix before debate]
+```
+
+**If any marker FAILS**: Revise the draft before proceeding to debate. Do NOT waste debate rounds on a fundamentally flawed strategy.
 
 ---
 
 ## Step 2: Multi-Model Adversarial Debate
 
-Once the user approves the initial draft, send it to opponent models for critique.
-
 ### Model Selection
+Ask which models should critique the strategy:
+- gpt-5.2 (OpenAI - balanced, strong reasoning)
+- claude-opus-4-5 (Anthropic - deep analysis)
 
-Ask the user using AskUserQuestion:
-- "Which models should critique your strategy?"
-  - Provide model options with descriptions:
-    - gpt-5.2 (OpenAI - balanced, strong reasoning)
-    - claude-opus-4-5 (Anthropic - deep analysis)
-  - Allow comma-separated selection
+### Recommended Focus Progression
+
+Follow this focus sequence for maximum effectiveness:
+
+| Round | Focus | Purpose |
+|-------|-------|---------|
+| 1 | `diagnosis` | Is this even the right problem? |
+| 2 | `assumptions` | What are we taking for granted? |
+| 3 | `coherence` | Do actions reinforce each other? |
+| 4 | `feasibility` | Can we actually execute this? |
+| 5+ | `risks`, `alternatives` | What could go wrong? Other approaches? |
 
 ### Running the Debate
 
-Use Bash to run the debate script:
-
 ```bash
-echo "<strategy_document>" | python3 /path/to/skills/adversarial-strategy/scripts/debate.py critique \
-  --models <selected_models> \
-  --round <round_number> \
-  --json
+cat <<'STRATEGY_EOF' | python3 ~/.claude/plugins/cache/ebowman-plugins/adversarial-strategy/1.0.0/skills/adversarial-strategy/scripts/debate.py critique --models MODEL_LIST --round N --focus FOCUS_AREA --json
+<strategy content here>
+STRATEGY_EOF
 ```
 
-The script will return:
-- Whether each model agrees or critiques
-- Specific critiques and suggested revisions
-- Revised strategy (if critiqued)
-- Token usage and costs
+### Persona Selection Guide
 
-### Focus Areas (Optional)
+Use personas strategically based on what the strategy needs:
 
-Ask if the user wants to focus the critique on specific aspects:
-- `assumptions` - Challenge underlying assumptions
-- `coherence` - Test action coherence and mutual reinforcement
-- `diagnosis` - Scrutinize the problem diagnosis
-- `feasibility` - Assess practical feasibility
-- `risks` - Identify strategic risks
-- `alternatives` - Explore alternative approaches
-
-Add `--focus <area>` to the debate command if selected.
-
-### Personas (Optional)
-
-Offer specialized perspectives:
-- `rumelt` - Richard Rumelt's critical eye
-- `strategist` - Senior strategy consultant
-- `skeptic` - Devil's advocate
-- `operator` - Execution-focused
-- `competitor` - Competitive response
-- `board-member` - Governance perspective
-
-Add `--persona <persona>` to the debate command if selected.
+| Persona | When to Use |
+|---------|-------------|
+| `rumelt` | First round, and every 2 rounds as checkpoint |
+| `strategist` | General critique, any round |
+| `skeptic` | Final validation before declaring consensus |
+| `operator` | When actions seem unrealistic or uncoordinated |
+| `competitor` | When competitive dynamics are central |
+| `board-member` | When governance/risk concerns are high |
 
 ---
 
-## Step 3: Claude's Active Participation
+## Step 2.5: Rumelt Checkpoint (Every 2 Rounds)
 
-You are NOT just an orchestrator - you are an active participant in the debate.
+**After rounds 2, 4, 6, etc.**, pause and ask:
 
-### Your Responsibilities:
+> "Has this strategy maintained its strategic clarity, or has debate diluted it into something generic and safe?"
 
-**A. Provide Independent Critique**
-Before synthesizing opponent responses, provide your own critique:
-- Does the diagnosis identify the real constraint? (Inherent Simplicity)
-- Is the guiding policy actually a policy or a goal in disguise?
-- Do the actions reinforce each other?
-- Are high-risk assumptions being tested?
+### Checkpoint Questions:
+1. Is the diagnosis still SPECIFIC to this situation (not generic)?
+2. Does the guiding policy still RULE THINGS OUT (not try to do everything)?
+3. Do the actions still CONCENTRATE resources (not scatter them)?
+4. Has the strategy become "death by committee" - safe but toothless?
 
-**B. Apply Intellectual Frameworks**
+**If dilution detected**:
+- Flag the specific areas that have become generic
+- Restore distinctive choices from earlier versions
+- Consider whether critique was valid improvement or loss of nerve
 
-Use these frameworks in your critique:
+---
 
-#### SCQA Analysis
-- Is there a clear Situation-Complication-Question-Answer flow?
-- Does the strategy address the right question?
+## Step 3: Your Active Participation
 
-#### Pyramid Principle
-- Is the recommendation clear upfront?
-- Are supporting arguments well-structured?
+You are NOT just an orchestrator - actively participate by:
 
-#### Confirmation Bias Detection
-- What evidence would disprove this strategy?
-- What alternative explanations exist?
-- Are we favoring information that supports existing beliefs?
+1. **Providing independent critique** using the frameworks (SCQA, Pyramid, Inherent Simplicity, etc.)
 
-#### Cognitive Bias Awareness
-- Anchoring: Are we over-relying on first information?
-- Overconfidence: Are we underestimating challenges?
-- Sunk cost: Are we continuing due to past investment?
-- Status quo: Are we resisting necessary change?
+2. **Evaluating opponent critiques** for validity vs preference:
+   - Is this a substantive issue or stylistic preference?
+   - Would addressing this strengthen or dilute the strategy?
 
-#### Inherent Simplicity (Theory of Constraints)
-- What is THE constraint limiting performance?
-- Does the strategy focus on this constraint?
-- Are we spreading resources too thin?
+3. **Synthesizing revisions** that preserve strategic intent
 
-#### Evaporating Cloud (for apparent trade-offs)
-If the strategy presents an either/or choice:
-1. Map both positions to underlying needs
-2. Find the shared objective
-3. Identify assumptions behind each position
-4. Challenge assumptions to find win-win solutions
-
-#### Assumption Risk Assessment
-For each critical assumption:
-- Likelihood of being wrong: H/M/L
-- Impact if wrong: H/M/L
-- Overall risk rating: H/M/L
-- Validation approach
-
-**C. Evaluate Opponent Critiques**
-Not all critiques are valid. Assess each one:
-- Is this a substantive issue or stylistic preference?
-- Is the critique based on accurate understanding?
-- Does the critique apply to this specific context?
-- Would addressing this strengthen or dilute the strategy?
-
-**D. Synthesize Revisions**
-Integrate valid critiques into an improved strategy:
-- Preserve the core strategic logic
-- Strengthen weak areas
-- Add specificity where vague
-- Remove genuine gaps or contradictions
+4. **Flagging when debate is diluting the strategy** - more critique isn't always better
 
 ---
 
 ## Step 4: Iteration & Convergence
 
-### Convergence Rules
-- Maximum 10 rounds per debate cycle
-- ALL models AND Claude must agree for convergence
-- More models = stricter convergence requirements
+### Quality Score Assessment
+
+Rate the strategy on this scale after each round:
+
+```
+Diagnosis Quality (0-10):
+- Specificity (0-3): Is it about THIS situation?
+- Evidence (0-3): Based on data, not assumptions?
+- Focus (0-2): Identifies THE constraint?
+- Root cause (0-2): Addresses cause, not symptoms?
+
+Guiding Policy Quality (0-10):
+- Policy vs Goal (0-3): Is it a policy, not a goal?
+- Leverage (0-3): Does it create advantage?
+- Focus (0-2): Does it rule things out?
+- Coherence (0-2): Does it enable the actions?
+
+Action Coherence (0-10):
+- Mutual reinforcement (0-3): Do actions help each other?
+- Sequencing (0-2): Clear dependencies?
+- Specificity (0-3): Concrete enough to execute?
+- Resource focus (0-2): Concentrated, not scattered?
+
+TOTAL: /30
+```
+
+### Quality Thresholds:
+- **25+**: Ready for execution
+- **20-24**: Good, minor refinements needed
+- **15-19**: Significant issues, more debate needed
+- **<15**: Fundamental problems, revisit diagnosis
+
+### Convergence Rules:
+- Maximum 10 rounds per cycle
+- ALL models AND you must agree
+- Quality score must be 20+ for convergence
+- If models agree in rounds 1-2, automatically press for confirmation
 - Quality over speed - don't rush to agreement
-
-### Anti-Laziness Check (Rounds 1-2)
-If models agree too quickly (rounds 1-2), press them to confirm they thoroughly reviewed:
-- Use `--press` flag
-- Ask models to cite specific sections they verified
-- Require them to identify ANY remaining concerns
-
-### Iteration Loop
-
-For each round:
-1. Run the debate script with current strategy
-2. Analyze all critiques (yours and opponents')
-3. Synthesize valid feedback into revisions
-4. Present revised strategy to user for approval
-5. If user approves, run next round
-6. Repeat until convergence or max rounds
-
-### Handling Disagreement
-
-If models persistently disagree:
-- Identify the core point of contention
-- Use Evaporating Cloud to analyze the conflict
-- Ask the user for input on the trade-off
-- Make an explicit decision and document the rationale
 
 ---
 
 ## Step 5: Finalize & Output
 
-When all models agree (or max rounds reached):
-
-### Final Quality Check
-
-Before declaring consensus, verify:
-- [ ] Diagnosis identifies a clear, specific challenge
-- [ ] Diagnosis is evidence-based, not assumption-based
-- [ ] Guiding policy is a policy, not a goal
-- [ ] Guiding policy creates leverage or advantage
-- [ ] Actions are coordinated and mutually reinforcing
-- [ ] High-risk assumptions are identified with validation plans
-- [ ] Success metrics are specific and measurable
-- [ ] Risks have mitigation strategies
-
-### Output the Final Strategy
-
-1. **Print to terminal**: Display the complete strategy
-2. **Save to file**: Write to `strategy-output.md`
-
-### Summary Report
-
-Provide a summary including:
-- Total rounds to convergence
-- Models that participated
-- Key refinements made
-- Total cost
-- Remaining open questions
-
-```markdown
-## Debate Summary
-
-**Rounds**: X
-**Models**: Claude vs [model list]
-**Total Cost**: $X.XX
-
-### Key Refinements
-1. [Refinement 1]
-2. [Refinement 2]
-3. [Refinement 3]
-
-### Consensus Points
-- [Point where all agreed]
-
-### Remaining Questions
-- [Open questions for future consideration]
-```
+When consensus is reached:
+1. Run final Rumelt check (has strategic clarity been maintained?)
+2. Calculate and display final quality score
+3. Display complete strategy
+4. Write to `strategy-output.md`
+5. Provide summary (rounds, models, key refinements, cost, quality score progression)
 
 ---
 
-## Step 6: User Review & Iteration
+## Step 6: User Review
 
-After presenting the final strategy, offer options:
-
-**Using AskUserQuestion:**
-- "How would you like to proceed?"
-  - Options:
-    - "Accept this strategy"
-    - "Make specific changes (no debate)"
-    - "Run another debate cycle"
-    - "Get Rumelt feedback simulation"
-
-### If "Make specific changes":
-- Apply changes without full debate
-- Offer to run quick validation round if changes are significant
-
-### If "Run another debate cycle":
-- Can use same or different models
-- Can add/change focus area or persona
-- Track as separate cycle (not round)
-
-### If "Get Rumelt feedback simulation":
-- Proceed to Step 7
+Offer options:
+- Accept this strategy
+- Make specific changes (no debate)
+- Run another debate cycle
+- Get detailed Rumelt feedback simulation
 
 ---
 
 ## Step 7: Rumelt Feedback Simulation
 
-Provide feedback from Richard Rumelt's perspective:
+Provide detailed critique as Richard Rumelt would:
 
-### Rumelt Would Ask:
-1. "What is the kernel of your strategy?"
-2. "Why does your diagnosis identify THIS as the critical factor?"
-3. "Is your guiding policy actually a policy, or is it a goal?"
-4. "Do your actions create focused effort, or do they scatter resources?"
-5. "What makes this strategy good rather than bad?"
+### Rumelt's Questions:
+1. "What is the kernel of your strategy? Can you state it in one paragraph?"
+2. "Why does your diagnosis identify THIS as the critical factor? What evidence?"
+3. "Your guiding policy - is it actually a policy, or is it a goal in disguise?"
+4. "Do your actions create focused effort, or do they scatter resources across too many fronts?"
+5. "What makes this strategy GOOD rather than just a strategy?"
 
-### Bad Strategy Warning Signs (from Rumelt):
-- **Fluff**: Buzzwords and jargon masking lack of thought
-- **Failure to face the challenge**: Not acknowledging the real problem
-- **Mistaking goals for strategy**: "Our strategy is to be #1"
-- **Bad strategic objectives**: Goals that don't address the challenge
+### What Rumelt Would Praise:
+[Identify specific elements that exemplify good strategy]
 
-### Simulate Rumelt's Critique:
-Provide a critique as if from Rumelt himself:
-- What would he praise?
-- What would he challenge?
-- What questions would he ask?
-- What improvements would he suggest?
+### What Rumelt Would Challenge:
+[Identify specific weaknesses or areas of concern]
 
----
-
-## Step 8: Additional Cycles (Optional)
-
-If the user wants additional validation:
-
-### Different Model Mix
-- Start with fast models, then use stronger ones
-- Use multiple personas in sequence
-- Add focus areas progressively
-
-### Progression Examples:
-1. **Speed to depth**: gemini-flash → gpt-4o → claude-opus
-2. **Breadth**: diagnosis focus → coherence focus → feasibility focus
-3. **Perspectives**: strategist → skeptic → operator
-
-### Track Cycles Separately
-- Cycle 1, Round 1-N
-- Cycle 2, Round 1-N
-- Each cycle can have different config
-
----
-
-## Tool Usage Reference
-
-### Required Tools:
-- **AskUserQuestion**: Gather user input at decision points
-- **Read**: Load existing strategy documents
-- **Bash**: Execute debate.py script
-- **Write**: Save final strategy to strategy-output.md
-
-### Debate Script Commands:
-```bash
-# Basic critique
-python3 debate.py critique --models MODEL1,MODEL2 --round N
-
-# With focus area
-python3 debate.py critique --models MODEL --focus assumptions
-
-# With persona
-python3 debate.py critique --models MODEL --persona rumelt
-
-# Anti-laziness check
-python3 debate.py critique --models MODEL --press
-
-# List available options
-python3 debate.py providers
-python3 debate.py focus-areas
-python3 debate.py personas
-
-# Diff between versions
-python3 debate.py diff --previous v1.md --current v2.md
-```
-
-### Output Format:
-Always use `--json` flag for programmatic parsing. Parse the JSON response for:
-- `all_agreed`: boolean
-- `results`: array of model responses
-- `cost`: total and per-model costs
-
----
-
-## Messaging Quality Checklist
-
-Before finalizing any strategy, verify communication quality:
-
-### Clarity
-- [ ] Core message expressible in one sentence
-- [ ] No unnecessary jargon
-- [ ] Clear logical flow
-
-### Completeness
-- [ ] All required sections present
-- [ ] No critical gaps
-- [ ] Dependencies explicit
-
-### Actionability
-- [ ] Actions are specific
-- [ ] Owners can be assigned
-- [ ] Timeline is clear
-
-### Credibility
-- [ ] Evidence supports claims
-- [ ] Assumptions acknowledged
-- [ ] Risks addressed
-
-### Structure (Pyramid Principle)
-- [ ] Recommendation upfront
-- [ ] Supporting arguments grouped
-- [ ] Evidence at appropriate level
+### Rumelt's Suggested Improvements:
+[Concrete recommendations in Rumelt's voice]
 
 ---
 
 ## Remember
 
-1. **You are an active participant**, not just an orchestrator
-2. **Quality over speed** - don't rush to agreement
-3. **Challenge lazy thinking** - including your own
-4. **Preserve strategic intent** - don't let critique dilute focus
-5. **The goal is a GOOD strategy**, not consensus on a mediocre one
+1. **Rumelt check EARLY and OFTEN** - don't wait until the end
+2. **You are an active participant**, not just an orchestrator
+3. **Quality over speed** - don't rush to agreement
+4. **Watch for dilution** - more critique can make strategies worse
+5. **Preserve strategic intent** - distinctive choices matter
+6. **The goal is a GOOD strategy**, not consensus on a mediocre one
 
 A good strategy is:
 - **Specific** to the situation (not generic)
