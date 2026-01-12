@@ -39,6 +39,11 @@ from datetime import datetime
 
 os.environ["LITELLM_LOG"] = "ERROR"
 
+# Suppress Pydantic serialization warnings from litellm
+import warnings
+warnings.filterwarnings("ignore", message="Pydantic serializer warnings")
+warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
+
 try:
     import litellm
     from litellm import completion
